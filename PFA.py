@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[ ]:
 
 
 import pandas as pd
@@ -10,14 +10,14 @@ import matplotlib.pyplot as plt
 
 original_values_plot = False
 INCOME_BANK = 'SBI Bank'
-json_file_path = r'C:\Users\iamke\OneDrive\Important\Codes\Python Scripts\iPynbs\Practice\EXPENSES.json'
+json_file_path = r'C:\Users\iamke\OneDrive\Important\Codes\Python Scripts\Core Python\iPynbs\Practice\EXPENSES.json'
 import_file_location = r"C:\Users\iamke\OneDrive\Important\Codes\Python Scripts\Core Python\iPynbs\Practice\Personal Financial Analysis.xlsx"
 index_data = ['Category','Category Sub Type(CST)']
 category_transaction_pivot = 'category_transaction_pivot.xlsx'
 Expense_Analysis = 'CTGRY and CST Analysis.xlsx'
 sheet_names = ['ctgry','cst']
 sub_cols_names = ['Amount','Total Visits','Amount Per Visit','Quantity','Amount Per Quantity','Total Days','Amount Per Day','Visit/s Per Day','Quantity Per Day']
-path = "C:\\Users\\iamke\\OneDrive\\Important\\Codes\\Python Scripts\\iPynbs\\Practice\\"+Expense_Analysis
+path = "C:\\Users\\iamke\\OneDrive\\Important\\Codes\\Python Scripts\\Core Python\\iPynbs\\Practice\\"+Expense_Analysis
 writer = pd.ExcelWriter(path, engine = 'xlsxwriter')
 
 
