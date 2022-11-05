@@ -1,14 +1,17 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn import preprocessing
-import datetime as dt
-import math
 
 original_values_plot = False
 INCOME_BANK = 'SBI Bank'
 json_file_path = r'C:\Users\iamke\OneDrive\Important\Codes\Python Scripts\iPynbs\Practice\EXPENSES.json'
-import_file_location = r"C:\Users\iamke\OneDrive\Important\Codes\Python Scripts\iPynbs\Practice\Personal Financial Analysis.xlsx"
+import_file_location = r"C:\Users\iamke\OneDrive\Important\Codes\Python Scripts\Core Python\iPynbs\Practice\Personal Financial Analysis.xlsx"
 index_data = ['Category','Category Sub Type(CST)']
 category_transaction_pivot = 'category_transaction_pivot.xlsx'
 Expense_Analysis = 'CTGRY and CST Analysis.xlsx'
@@ -353,7 +356,28 @@ weekly_df['A/Q'] = round(weekly_df['Amount']/weekly_df['Quantity'],2)
 weekly_df['Count'] = all_expenses_count_df.resample('W').sum()
 weekly_df['A/C'] = round(weekly_df['Amount']/weekly_df['Count'],2)
 weekly_df['Q/C'] = round(weekly_df['Quantity']/weekly_df['Count'],2)
-# - NEW SHEET - #
+
+
+# 1. we divided the dates by week days and weekends. weekend_dates & weekday_dates
+# 2. we also partitioned incomes and expenses from transactions. all_expenses & all_incomes
+# 3. we have the total days existed from initial transaction data to current transaction data. total_days
+# 4. frequency of expenses transactions is determined by value_counts using dates column. here the frequency is daily count of expenses. it can be understood by a graph. x axis indicates different frequency levels and y axis indicates frequency  level counts. the graph name is Expense Date Frequency
+# 5. Distribution of expenses by category is visualized in second graph where the x axis sorted frequency of categories and y axis is normalized range of repitition occured by each category.
+# 6. using weekend_dates and weekday_dates, also parititioned the expenses by weekend and weekday expenses.
+# 7. for better analysis, categorized of expenses by weekend and weekday based on category and are determined and mined the top most category of expense by amount based on weekend expenses and weekday expenses.
+# 8. for better understanding, expenses are described based on weekday and weekend using describe function where numbers explain expenses based on category.
+# 9. the pivot table on category vs expenses and CST vs expenses having the values as aggregate amount is saved in excel sheet. each expenses column is sub divided into APPQ, Amount, Count, Quantity and all the values are aggregated too.
+# 10. Mean Data by Month on Expenses Amount is Plotted for each Expense Category. also, addind a DF for each expense category to show the top 5 expenses
+
+# # 1. Statistical Analysis like Avg, Mean, Median, Total, StD for overall expenses.
+# # 2. Expense Ratios
+# # 3. Expense Modes on Amount and Quantity Names
+# # 4. Both Direct and Indirect Expenses per day
+# # 5. Minimum and Maximum Survival Amount needed per month
+
+# In[ ]:
+
+
 other_payment_keywords = ['Rent','Fee','Grocer']
 
 #TOP_EXPENSE is the top most expense on all the categories.
@@ -476,7 +500,11 @@ only_transactions_expenses_powebi.to_excel(writer,sheet_name='Expense Sheet',col
 writer.save()
 writer.close()
 
-## - NEW SHEET - ##
+
+# # Single Row Aggregation by Column on both Quantity and Amount Analysis with  Visualization
+
+# In[ ]:
+
 
 # to use multiple use, // in between
 column_name = 'Quantity Name'
@@ -540,7 +568,12 @@ plt.ylabel('Amount')
 plt.title(capitalise(main_query, ' ')+' Expenses on Amount by Month')
 plt.show()
 
-## - NEW SHEET - ##
+
+# # Enhanced Single Row level Aggregation by Column Analysis on both Amount and Quantity
+
+# In[ ]:
+
+
 column_name = 'Quantity Name'
 split_for_and_condition = ['BM']
 split_value = 1
@@ -621,7 +654,12 @@ print('Period Check:',period_check)
 print('Mean Frequency on Expenses',round(filtered_df['Date'].to_period(period_check).groupby('Date').count().mean(),2))
 # filtered_df
 
-## - NEW SHEET - ##
+
+# # Weekly and Monthly Change Analysis
+
+# In[ ]:
+
+
 weekly_change_df = pd.DataFrame(only_transactions_expenses_dateindex.resample('W')['Amount'].sum())
 monthly_change_df = pd.DataFrame(only_transactions_expenses_dateindex.resample('M')['Amount'].sum())
 change_calc = [weekly_change_df,monthly_change_df]
@@ -655,8 +693,60 @@ for i in range(len(monthly_change_df.index)):
 
 plt.show()
 
-## - NEW SHEET - ##
 
+# Useful Variables:
+# 1. monthly_change_df
+# 2. weekly_change_df
+# 3. df
+# 4. borrow_lend_transactions
+# 5. lend_transactions
+# 6. borrow_transactions
+# 7. lend_transactions_cleared
+# 8. borrow_transactions_cleared
+# 9. all_incomes
+# 10. all_incomes_count_df
+# 11. all_expenses
+# 12. all_expenses_count_df
+# 13. week_day_df
+# 14. weekend_expenses
+# 15. only_transactions_expenses_dateindex
+# 16. JSON_df_expenses
+# 17. expenses_by_day
+# 18. expenses_pivoted
+# 19. quantity_expenses_pivoted
+# 20. quantity_expenses_pivoted_count
+# 21. TOP_EXPENSE
+# 22. NO_EXPENSE_DAYS
+# 23. EXPENSE_DAYS
+# 24. EXPENSE_MEAN
+# 25. TOTAL_DAYS
+# 26. difference_from_expense
+# 27. price_per_quantity
+# 28. remaining_amount
+# 29. active_subscriptions
+# 30. active_subscriptions_final_data
+# 31. active_subscriptions_final_data_sum
+# 32. indirect_expenses
+# 33. indirect_expenses_amount
+# 34. indirect_expenses_days
+# 35. indirect_expenses_per_day
+# 36. per_day_expense_amount
+# 37. per_day_indirect_expenses
+# 38. maximum_avg_expense_per_day
+# 39. minimum_avg_expense_per_day
+# 40. monthly_df
+# 41. weekly_df
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+from sklearn import preprocessing
 normalizes_list = ['monthly_df','weekly_df','monthly_change_df','weekly_change_df']
 scaler = preprocessing.MinMaxScaler(feature_range=(0, 1))
 for j in normalizes_list:
@@ -689,17 +779,51 @@ for i in range(len(quarter_level_df)):
 plt.show()
 
 
+# In[ ]:
+
+
+import datetime as dt
+import math
 math.ceil(((only_transactions_expenses_dateindex.resample('Q')['Amount'].sum().index[-1]-only_transactions_expenses_dateindex.resample('Q')['Amount'].sum().index[-2]).days-(only_transactions_expenses_dateindex.resample('Q')['Amount'].sum().index[-1]-dt.datetime.today()).days)/30)
+
+
+# In[ ]:
+
 
 for i in only_transactions_expenses_dateindex.resample('Q')['Amount'].sum().index[:-1]:
     print(i)
-    
+
+
+# In[ ]:
+
+
 quarter_df_actual = pd.DataFrame(index = only_transactions_expenses_dateindex.resample('Q')['Amount'].sum().index, data = list(only_transactions_expenses_dateindex.resample('Q')['Amount'].sum().values),columns=['Amount'])
 quarter_df_actual['Date'] = quarter_df_actual.index
 quarter_df_actual_1 = quarter_df_actual.diff()
 x = quarter_df_actual['Amount'][1:-1]/quarter_df_actual_1.Date[1:-1].dt.days
+
+
+# In[ ]:
+
+
 x[quarter_df_actual.Date[-1]] = quarter_df_actual.Amount[-1]/((dt.datetime.now() - quarter_df_actual['Date'][-2]).days+1)
 x.plot()
+
+
+# In[ ]:
+
+
 x[quarter_df_actual['Date'][0]] = quarter_df_actual['Amount'][0]/((quarter_df_actual['Date'][0] - only_transactions_expenses_dateindex.index[0]).days+1)
-x[quarter_df_actual['Date'][0]] = quarter_df_actual['Amount'][0]/((quarter_df_actual['Date'][0] - only_transactions_expenses_dateindex.index[0]).days+1)
+
+
+# In[ ]:
+
+
 x.plot()
+
+
+# In[ ]:
+
+
+
+
