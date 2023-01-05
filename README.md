@@ -26,7 +26,7 @@ Set the path to the data file in the script.
 
 ## Run the script:
 ```
-python personal_finance_analysis.py
+python pfa.py
 ```
 ## Output
 The script will generate a report and optionally create visualizations, depending on the options chosen in the script. The Category vs Category Subtype Analysis can be downloaded, including data for PowerBI created from the imported Excel file.
